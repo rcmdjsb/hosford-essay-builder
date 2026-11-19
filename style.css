@@ -1,0 +1,1654 @@
+/* ==========================================================================
+   Hosford Essay Builder — Design System & Styles
+   Palette: Hosford Middle School Huskies
+   Primary Teal: #1F7A99 | Light Cyan: #7CC9E8 | Deep Navy: #061A22
+   ========================================================================== */
+
+:root {
+  --husky-teal: #1F7A99;
+  --husky-teal-hover: #17617A;
+  --husky-teal-soft: #EBF5F9;
+  --husky-cyan: #7CC9E8;
+  --husky-cyan-soft: #EDF8FC;
+  --husky-navy: #061A22;
+  --husky-navy-soft: #0E2B37;
+
+  --surface-canvas: #F2F6F8;
+  --surface-card: #FFFFFF;
+  --surface-subtle: #F7FAFC;
+  --surface-input: #FFFFFF;
+
+  --text-primary: #0F222B;
+  --text-secondary: #35505C;
+  --text-muted: #55707D;
+
+  --border-light: #D6E3EA;
+  --border-strong: #B8CDD8;
+
+  --danger: #B83232;
+  --danger-hover: #962525;
+  --danger-soft: #FDF2F2;
+  --danger-border: #F2C5C5;
+
+  --success: #1B7A58;
+  --success-soft: #EBF7F2;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 2px 10px rgba(6, 26, 34, 0.06), 0 1px 2px rgba(6, 26, 34, 0.04);
+  --shadow-paper: 0 6px 28px rgba(6, 26, 34, 0.12), 0 1px 4px rgba(6, 26, 34, 0.06);
+  --focus-ring: 0 0 0 3px rgba(124, 201, 232, 0.45);
+
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mla: "Times New Roman", Times, Georgia, serif;
+}
+
+/* Reset & Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-ui);
+  color: var(--text-primary);
+  background-color: var(--surface-canvas);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--husky-navy);
+  color: #FFFFFF;
+  padding: 0.75rem 1.25rem;
+  z-index: 1000;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  left: 0.75rem;
+  top: 0.75rem;
+  border-radius: var(--radius-sm);
+  outline: 2px solid var(--husky-cyan);
+}
+
+/* ==========================================================================
+   Top Header (Deep Navy)
+   ========================================================================== */
+.app-header {
+  background-color: var(--husky-navy);
+  color: #FFFFFF;
+  border-bottom: 3px solid var(--husky-teal);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-inner {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: #FFFFFF;
+}
+
+.app-subtitle {
+  margin: 0.1rem 0 0;
+  font-size: 0.78rem;
+  color: var(--husky-cyan);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.save-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  color: #D7ECF5;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(124, 201, 232, 0.22);
+}
+
+.save-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--husky-cyan);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.save-indicator.is-saving .save-dot {
+  background-color: #F6C85F;
+  transform: scale(1.2);
+}
+
+/* ==========================================================================
+   Progress Bar & Stepper Navigation
+   ========================================================================== */
+.wizard-nav-bar {
+  background-color: var(--surface-card);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.wizard-nav-inner {
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: 0.8rem 1.25rem 0.9rem;
+}
+
+.progress-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.86rem;
+}
+
+.progress-step-label {
+  font-weight: 700;
+  color: var(--husky-navy);
+}
+
+.word-count-badge {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--husky-teal);
+  background: var(--husky-teal-soft);
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-pill);
+}
+
+.progress-track {
+  width: 100%;
+  height: 8px;
+  background-color: #E2EDF2;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 20%;
+  background: linear-gradient(90deg, var(--husky-teal), var(--husky-cyan));
+  border-radius: var(--radius-pill);
+  transition: width 0.28s ease;
+}
+
+.step-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.step-pill {
+  appearance: none;
+  border: 1px solid var(--border-light);
+  background: var(--surface-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.38rem 0.78rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.step-pill:hover {
+  border-color: var(--husky-teal);
+  color: var(--husky-navy);
+  background: var(--husky-teal-soft);
+}
+
+.step-pill:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-color: var(--husky-teal);
+}
+
+.step-pill.is-active {
+  background: var(--husky-teal);
+  border-color: var(--husky-teal);
+  color: #FFFFFF;
+}
+
+.step-pill.is-completed:not(.is-active) {
+  background: #FFFFFF;
+  border-color: var(--husky-cyan);
+  color: var(--husky-navy);
+}
+
+.step-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: var(--husky-teal-soft);
+  color: var(--husky-teal);
+}
+
+.step-pill.is-active .step-check {
+  background: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   Main Stage & Page Card
+   ========================================================================== */
+.main-container {
+  width: 100%;
+  max-width: 820px;
+  margin: 1.5rem auto 3rem;
+  padding: 0 1.25rem;
+  flex: 1;
+}
+
+.main-container.is-wide {
+  max-width: 1060px;
+}
+
+.main-container:focus {
+  outline: none;
+}
+
+.page-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 1.75rem 2rem 1.5rem;
+  animation: fadeSlideIn 0.2s ease-out;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-header-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1.15rem;
+  margin-bottom: 1.35rem;
+  border-bottom: 1px solid var(--border-light);
+  flex-wrap: wrap;
+}
+
+.page-kicker {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--husky-teal);
+  margin-bottom: 0.25rem;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--husky-navy);
+  line-height: 1.25;
+}
+
+.page-description {
+  margin: 0.35rem 0 0;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  max-width: 62ch;
+}
+
+/* ==========================================================================
+   Form Inputs & Scaffolded Boxes
+   ========================================================================== */
+.form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.15rem;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.38rem;
+}
+
+.field-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.field-label {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--husky-navy);
+}
+
+.field-sublabel {
+  font-weight: 500;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
+.field-hint {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.input-text,
+.input-textarea {
+  width: 100%;
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--surface-input);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 0.72rem 0.92rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.input-text::placeholder,
+.input-textarea::placeholder {
+  color: #77909D;
+}
+
+.input-text:hover,
+.input-textarea:hover {
+  border-color: var(--husky-teal);
+}
+
+.input-text:focus,
+.input-textarea:focus {
+  outline: none;
+  border-color: var(--husky-teal);
+  box-shadow: var(--focus-ring);
+}
+
+.input-textarea {
+  min-height: 104px;
+  resize: vertical;
+}
+
+.input-textarea.is-compact {
+  min-height: 86px;
+}
+
+.date-input-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.date-input-row .input-text {
+  flex: 1;
+}
+
+/* MLA Setup Tip Box */
+.info-callout {
+  background: var(--husky-cyan-soft);
+  border: 1px solid #C2E5F4;
+  border-left: 4px solid var(--husky-teal);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1.05rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.info-callout strong {
+  color: var(--husky-navy);
+}
+
+/* Original Claim Reference Card (Conclusion Page) */
+.claim-reference-box {
+  background: var(--husky-cyan-soft);
+  border: 1px solid #BDE3F3;
+  border-left: 4px solid var(--husky-teal);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.15rem;
+  margin-bottom: 0.25rem;
+}
+
+.claim-reference-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--husky-teal);
+  margin-bottom: 0.35rem;
+}
+
+.claim-reference-text {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: var(--husky-navy);
+  font-weight: 500;
+}
+
+.claim-reference-empty {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Evidence Chunk Cards (Body Paragraphs)
+   ========================================================================== */
+.evidence-chunks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.evidence-chunk-card {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-light);
+  border-left: 4px solid var(--husky-teal);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.2rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.evidence-chunk-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.evidence-chunk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--husky-navy);
+}
+
+.evidence-chunk-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--husky-teal);
+  color: #FFFFFF;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.add-chunk-row {
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  font-family: var(--font-ui);
+  font-size: 0.94rem;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 0.68rem 1.15rem;
+  border-radius: var(--radius-md);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.08s ease;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.btn-primary {
+  background-color: var(--husky-teal);
+  color: #FFFFFF;
+  border-color: var(--husky-teal);
+}
+
+.btn-primary:hover {
+  background-color: var(--husky-teal-hover);
+  border-color: var(--husky-teal-hover);
+}
+
+.btn-secondary {
+  background-color: #FFFFFF;
+  color: var(--husky-navy);
+  border-color: var(--border-strong);
+}
+
+.btn-secondary:hover {
+  background-color: var(--surface-subtle);
+  border-color: var(--husky-teal);
+  color: var(--husky-teal);
+}
+
+.btn-outline-teal {
+  background-color: var(--husky-teal-soft);
+  color: var(--husky-teal);
+  border-color: var(--husky-cyan);
+}
+
+.btn-outline-teal:hover {
+  background-color: #DCEFF7;
+  border-color: var(--husky-teal);
+  color: var(--husky-navy);
+}
+
+.btn-dashed {
+  background-color: #FFFFFF;
+  color: var(--husky-teal);
+  border: 1.5px dashed var(--husky-teal);
+  width: 100%;
+  padding: 0.72rem 1rem;
+}
+
+.btn-dashed:hover {
+  background-color: var(--husky-teal-soft);
+  color: var(--husky-navy);
+}
+
+.btn-clear-header {
+  background-color: transparent;
+  color: #F4D8D8;
+  border: 1px solid rgba(242, 197, 197, 0.45);
+  font-size: 0.84rem;
+  padding: 0.45rem 0.85rem;
+}
+
+.btn-clear-header:hover {
+  background-color: rgba(184, 50, 50, 0.22);
+  border-color: #F2A2A2;
+  color: #FFFFFF;
+}
+
+.btn-danger {
+  background-color: var(--danger);
+  color: #FFFFFF;
+  border-color: var(--danger);
+}
+
+.btn-danger:hover {
+  background-color: var(--danger-hover);
+  border-color: var(--danger-hover);
+}
+
+.btn-ghost-danger {
+  background-color: transparent;
+  color: var(--danger);
+  border-color: transparent;
+  font-size: 0.82rem;
+  padding: 0.35rem 0.65rem;
+}
+
+.btn-ghost-danger:hover {
+  background-color: var(--danger-soft);
+  border-color: var(--danger-border);
+}
+
+.btn-small {
+  font-size: 0.84rem;
+  padding: 0.45rem 0.78rem;
+}
+
+.btn-link-inline {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--husky-teal);
+  font-family: var(--font-ui);
+  font-size: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.btn-link-inline:hover {
+  color: var(--husky-navy);
+}
+
+/* ==========================================================================
+   Page Footer Navigation
+   ========================================================================== */
+.page-footer {
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.page-footer-center {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   Final Page: MLA Preview & Export Toolbar
+   ========================================================================== */
+.mla-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.25rem;
+}
+
+.mla-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.mla-tip {
+  margin: 0 0 1.25rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.empty-essay-banner {
+  background: var(--husky-cyan-soft);
+  border: 1px solid #BDE3F3;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  text-align: center;
+  margin-bottom: 1.25rem;
+  color: var(--text-secondary);
+}
+
+.empty-essay-banner p {
+  margin: 0 0 0.85rem;
+}
+
+/* True MLA Letter Sheet Preview */
+.mla-sheet-wrapper {
+  background: #E5EDF1;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 1rem;
+  overflow-x: auto;
+}
+
+.mla-paper {
+  width: 100%;
+  max-width: 8.5in;
+  min-height: 10in;
+  margin: 0 auto;
+  background: #FFFFFF;
+  color: #000000;
+  padding: 0.5in 1in 1in 1in;
+  box-shadow: var(--shadow-paper);
+  font-family: var(--font-mla);
+  font-size: 12pt;
+  line-height: 2;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+.mla-running-header {
+  text-align: right;
+  margin: 0 0 0.25in 0;
+  line-height: 1;
+  font-family: var(--font-mla);
+  font-size: 12pt;
+  color: #000000;
+}
+
+.mla-heading-block {
+  margin: 0;
+  padding: 0;
+}
+
+.mla-heading-line {
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+}
+
+.mla-title {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 12pt;
+  line-height: 2;
+}
+
+.mla-paragraph {
+  margin: 0;
+  padding: 0;
+  text-indent: 0.5in;
+  text-align: left;
+}
+
+.mla-placeholder {
+  color: #7A8C96;
+  font-style: italic;
+}
+
+.word-count-badge.is-complete {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.assessment-status-banner {
+  background: var(--husky-cyan-soft);
+  border: 1px solid #C2E5F4;
+  border-left: 4px solid var(--husky-teal);
+  border-radius: var(--radius-md);
+  padding: 0.78rem 1rem;
+  margin-bottom: 0.9rem;
+  font-size: 0.89rem;
+  color: var(--text-secondary);
+}
+
+.assessment-status-banner.is-complete {
+  background: var(--success-soft);
+  border-color: #BBE5D3;
+  border-left-color: var(--success);
+  color: #134E39;
+}
+
+/* ==========================================================================
+   Review & Self-Assessment Rubric Page
+   ========================================================================== */
+.review-section {
+  margin-bottom: 1.85rem;
+}
+
+.review-section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.9rem;
+}
+
+.review-section-title {
+  margin: 0;
+  font-size: 1.14rem;
+  font-weight: 700;
+  color: var(--husky-navy);
+}
+
+.review-section-sub {
+  margin: 0.2rem 0 0;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+/* Pre-Submission Student Checklist */
+.checklist-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.checklist-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.9rem 1.05rem;
+  background: var(--surface-subtle);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.checklist-card:hover {
+  border-color: var(--husky-teal);
+  background: #FFFFFF;
+}
+
+.checklist-card.is-checked {
+  background: var(--husky-teal-soft);
+  border-color: var(--husky-teal);
+}
+
+.checklist-checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+}
+
+.checklist-checkbox:focus-visible + .checklist-custom-box {
+  box-shadow: var(--focus-ring);
+  border-color: var(--husky-teal);
+}
+
+.checklist-custom-box {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+  border-radius: 6px;
+  border: 2px solid var(--border-strong);
+  background: #FFFFFF;
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 800;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.checklist-card.is-checked .checklist-custom-box {
+  background: var(--husky-teal);
+  border-color: var(--husky-teal);
+}
+
+.checklist-text {
+  font-size: 0.97rem;
+  line-height: 1.48;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.checklist-card.is-checked .checklist-text {
+  color: var(--husky-navy);
+  font-weight: 600;
+}
+
+/* Interactive 4-Level Proficiency Rubric Grid */
+.rubric-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background: #FFFFFF;
+}
+
+.rubric-table {
+  width: 100%;
+  min-width: 780px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.rubric-corner-header,
+.rubric-col-header {
+  background: var(--husky-navy);
+  color: #FFFFFF;
+  text-align: left;
+  padding: 0.8rem 0.75rem;
+  vertical-align: top;
+  border-bottom: 3px solid var(--husky-teal);
+}
+
+.rubric-corner-header {
+  width: 18%;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  vertical-align: middle;
+}
+
+.rubric-col-header {
+  width: 20.5%;
+  border-left: 1px solid rgba(124, 201, 232, 0.22);
+}
+
+.rubric-code-pill {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  padding: 0.16rem 0.5rem;
+  border-radius: var(--radius-pill);
+  margin-bottom: 0.3rem;
+}
+
+.rubric-col-title {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #E6F3F8;
+  line-height: 1.25;
+}
+
+.rubric-row + .rubric-row {
+  border-top: 1px solid var(--border-light);
+}
+
+.rubric-trait-cell {
+  background: var(--surface-subtle);
+  padding: 0.85rem 0.85rem;
+  text-align: left;
+  vertical-align: top;
+  border-right: 1px solid var(--border-light);
+}
+
+.rubric-trait-title {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--husky-navy);
+  line-height: 1.3;
+  margin-bottom: 0.35rem;
+}
+
+.rubric-trait-current {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--husky-teal);
+}
+
+.rubric-td {
+  padding: 0.45rem;
+  vertical-align: stretch;
+  border-left: 1px solid #E7EFF4;
+  height: 1px;
+}
+
+.rubric-cell-btn {
+  appearance: none;
+  width: 100%;
+  height: 100%;
+  min-height: 112px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.45rem;
+  text-align: left;
+  font-family: var(--font-ui);
+  background: #FFFFFF;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.7rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: background-color 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease, transform 0.08s ease;
+}
+
+.rubric-cell-btn:hover {
+  background: var(--surface-subtle);
+  border-color: var(--husky-cyan);
+  color: var(--text-primary);
+}
+
+.rubric-cell-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-color: var(--husky-teal);
+}
+
+.rubric-cell-top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+}
+
+.rubric-cell-code {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.rubric-cell-selected-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  opacity: 0.65;
+}
+
+.rubric-cell-btn:hover .rubric-cell-selected-tag {
+  opacity: 1;
+  color: var(--husky-teal);
+}
+
+.rubric-cell-desc {
+  font-size: 0.82rem;
+  line-height: 1.42;
+  color: inherit;
+}
+
+/* Highlighted Rubric Cell States */
+.rubric-cell-btn.is-selected {
+  border-width: 2px;
+  color: var(--husky-navy);
+  box-shadow: 0 2px 8px rgba(31, 122, 153, 0.14);
+}
+
+.rubric-cell-btn.is-selected .rubric-cell-selected-tag {
+  opacity: 1;
+}
+
+.rubric-cell-btn.is-selected-DP {
+  background: #FFF6EB;
+  border-color: #D9822B;
+}
+
+.rubric-cell-btn.is-selected-DP .rubric-cell-code,
+.rubric-cell-btn.is-selected-DP .rubric-cell-selected-tag {
+  color: #9A4D08;
+}
+
+.rubric-cell-btn.is-selected-CP {
+  background: #FFFBEA;
+  border-color: #C79A1C;
+}
+
+.rubric-cell-btn.is-selected-CP .rubric-cell-code,
+.rubric-cell-btn.is-selected-CP .rubric-cell-selected-tag {
+  color: #7D5D06;
+}
+
+.rubric-cell-btn.is-selected-PR {
+  background: #E8F6FB;
+  border-color: var(--husky-teal);
+}
+
+.rubric-cell-btn.is-selected-PR .rubric-cell-code,
+.rubric-cell-btn.is-selected-PR .rubric-cell-selected-tag {
+  color: var(--husky-teal-hover);
+}
+
+.rubric-cell-btn.is-selected-HP {
+  background: #E6F7F0;
+  border-color: var(--success);
+}
+
+.rubric-cell-btn.is-selected-HP .rubric-cell-code,
+.rubric-cell-btn.is-selected-HP .rubric-cell-selected-tag {
+  color: #115E43;
+}
+
+/* Proficiency Badges */
+.level-badge,
+.level-chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.24rem 0.65rem;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+.level-chip {
+  font-size: 0.74rem;
+  padding: 0.16rem 0.52rem;
+}
+
+.level-badge--DP {
+  background: #FDECD5;
+  color: #8F4506;
+}
+
+.level-badge--CP {
+  background: #FCF2C7;
+  color: #735605;
+}
+
+.level-badge--PR {
+  background: #D9EFF8;
+  color: #12566D;
+}
+
+.level-badge--HP {
+  background: #D5F2E6;
+  color: #0F593F;
+}
+
+.level-badge--none {
+  background: #E9EFF3;
+  color: var(--text-muted);
+}
+
+/* Self-Evaluation Summary Card */
+.self-eval-summary {
+  background: var(--surface-subtle);
+  border: 1.5px solid var(--border-light);
+  border-top: 4px solid var(--husky-teal);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.35rem;
+}
+
+.self-eval-summary-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.95rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.summary-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 1.1rem;
+}
+
+.summary-stat-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.summary-stat-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.summary-stat-value {
+  font-size: 1.08rem;
+  color: var(--husky-navy);
+}
+
+.summary-stat-overall {
+  margin-top: 0.1rem;
+}
+
+.summary-breakdown-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
+}
+
+.summary-trait-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem 1rem;
+}
+
+.summary-trait-row {
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+}
+
+.summary-trait-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--husky-navy);
+}
+
+/* Hidden Print Bundle on Screen */
+.print-bundle {
+  display: none;
+}
+
+/* ==========================================================================
+   Confirmation Modal (<dialog>)
+   ========================================================================== */
+.confirm-dialog {
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 0;
+  max-width: 440px;
+  width: calc(100% - 2rem);
+  box-shadow: 0 20px 50px rgba(6, 26, 34, 0.3);
+  background: #FFFFFF;
+  color: var(--text-primary);
+}
+
+.confirm-dialog::backdrop {
+  background: rgba(6, 26, 34, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.confirm-dialog-body {
+  padding: 1.65rem 1.75rem 1.5rem;
+}
+
+.confirm-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--danger-soft);
+  border: 1.5px solid var(--danger-border);
+  color: var(--danger);
+  font-weight: 800;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.9rem;
+}
+
+.confirm-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  color: var(--husky-navy);
+}
+
+.confirm-message {
+  margin: 0 0 1.4rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.7rem;
+}
+
+/* ==========================================================================
+   Toast Notification
+   ========================================================================== */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: var(--husky-navy);
+  color: #FFFFFF;
+  border-left: 4px solid var(--husky-cyan);
+  padding: 0.85rem 1.2rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 26px rgba(6, 26, 34, 0.28);
+  font-size: 0.92rem;
+  font-weight: 600;
+  z-index: 200;
+  max-width: 360px;
+}
+
+/* ==========================================================================
+   Responsive Adjustments (Chromebooks & Narrow Viewports)
+   ========================================================================== */
+@media (max-width: 720px) {
+  .page-card {
+    padding: 1.35rem 1.15rem 1.25rem;
+  }
+
+  .form-grid-2,
+  .summary-stats-grid,
+  .summary-trait-list {
+    grid-template-columns: 1fr;
+  }
+
+  .mla-paper {
+    padding: 0.6in 0.55in;
+    min-height: auto;
+  }
+
+  .page-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .page-footer .btn,
+  .page-footer-center {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ==========================================================================
+   Print / Save as PDF — Authentic MLA Essay + Self-Assessment Summary
+   ========================================================================== */
+@page {
+  size: letter;
+  margin: 1in;
+}
+
+@media print {
+  html,
+  body {
+    background: #FFFFFF !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #000000 !important;
+    display: block !important;
+  }
+
+  body > *:not(#print-bundle) {
+    display: none !important;
+  }
+
+  #print-bundle {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  #print-bundle .mla-paper {
+    max-width: none !important;
+    width: 100% !important;
+    min-height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    font-family: "Times New Roman", Times, serif !important;
+    font-size: 12pt !important;
+    line-height: 2 !important;
+    color: #000000 !important;
+  }
+
+  #print-bundle .mla-running-header {
+    margin-top: -0.45in;
+    margin-bottom: 0.25in;
+    font-size: 12pt !important;
+  }
+
+  #print-bundle .mla-paragraph {
+    text-indent: 0.5in !important;
+    orphans: 2;
+    widows: 2;
+  }
+
+  /* Self-Assessment Summary Page (clean page break after MLA essay) */
+  .print-self-assessment {
+    page: assessment;
+    break-before: page;
+    page-break-before: always;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 10pt;
+    line-height: 1.45;
+    color: #0F222B;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-sa-header {
+    border-bottom: 2.5px solid #1F7A99;
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+  }
+
+  .print-sa-kicker {
+    font-size: 8.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #1F7A99;
+    margin-bottom: 3px;
+  }
+
+  .print-sa-title {
+    margin: 0 0 6px;
+    font-size: 16pt;
+    color: #061A22;
+  }
+
+  .print-sa-meta {
+    font-size: 9.5pt;
+    color: #35505C;
+  }
+
+  .print-sa-overview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .print-sa-stat {
+    border: 1px solid #C8D9E2;
+    border-radius: 6px;
+    padding: 8px 10px;
+    background: #F7FAFC;
+  }
+
+  .print-sa-stat-label {
+    font-size: 7.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #4A626E;
+    margin-bottom: 3px;
+  }
+
+  .print-sa-stat-value {
+    font-size: 10.5pt;
+    font-weight: 700;
+    color: #061A22;
+  }
+
+  .print-sa-stat-sub {
+    font-size: 8.5pt;
+    color: #35505C;
+    margin-top: 2px;
+  }
+
+  .print-sa-block {
+    margin-bottom: 16px;
+  }
+
+  .print-sa-heading {
+    margin: 0 0 8px;
+    font-size: 11.5pt;
+    color: #061A22;
+  }
+
+  .print-checklist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .print-check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 9.5pt;
+    color: #35505C;
+  }
+
+  .print-check-item.is-checked {
+    color: #061A22;
+    font-weight: 600;
+  }
+
+  .print-check-box {
+    font-size: 11pt;
+    line-height: 1.2;
+    color: #1F7A99;
+  }
+
+  .print-rubric-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9pt;
+  }
+
+  .print-rubric-table th {
+    background: #061A22;
+    color: #FFFFFF;
+    text-align: left;
+    padding: 6px 8px;
+    font-size: 8.5pt;
+  }
+
+  .print-rubric-table td {
+    border: 1px solid #D6E3EA;
+    padding: 7px 8px;
+    vertical-align: top;
+  }
+
+  .print-trait-name {
+    font-weight: 700;
+    color: #061A22;
+    width: 24%;
+  }
+
+  .print-trait-score {
+    width: 26%;
+  }
+
+  .print-trait-desc {
+    width: 50%;
+    color: #2B424D;
+  }
+
+  .print-level-badge {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 8.5pt;
+    padding: 2px 7px;
+    border-radius: 999px;
+  }
+
+  .print-level-badge.level-DP {
+    background: #FDECD5;
+    color: #8F4506;
+  }
+
+  .print-level-badge.level-CP {
+    background: #FCF2C7;
+    color: #735605;
+  }
+
+  .print-level-badge.level-PR {
+    background: #D9EFF8;
+    color: #12566D;
+  }
+
+  .print-level-badge.level-HP {
+    background: #D5F2E6;
+    color: #0F593F;
+  }
+
+  .print-level-badge.level-none {
+    background: #E9EFF3;
+    color: #55707D;
+  }
+}

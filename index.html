@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hosford Essay Builder</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="export.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#wizard-stage">Skip to essay editor</a>
+
+  <!-- Top Application Header -->
+  <header class="app-header" role="banner">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 36 36" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="36" height="36" rx="8" fill="#1F7A99" />
+            <!-- Stylized Husky Shield / Paw Accent -->
+            <path d="M18 7L10 11.5V18.5C10 23.8 13.4 27.9 18 29.5C22.6 27.9 26 23.8 26 18.5V11.5L18 7Z" fill="#061A22" stroke="#7CC9E8" stroke-width="1.75" />
+            <path d="M14 14.5L16 17.5L18 15.5L20 17.5L22 14.5V22.5H19.8V19.2L18 20.8L16.2 19.2V22.5H14V14.5Z" fill="#7CC9E8" />
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1 class="app-title">Hosford Essay Builder</h1>
+          <p class="app-subtitle">Hosford Middle School Writing Studio</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="save-indicator" id="save-indicator" role="status" aria-live="polite">
+          <span class="save-dot" aria-hidden="true"></span>
+          <span id="save-indicator-text">Auto-saved</span>
+        </div>
+        <button type="button" class="btn btn-clear-header" id="btn-clear-essay">
+          Clear / Start New Essay
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Wizard Progress Bar & Step Navigation -->
+  <section class="wizard-nav-bar" aria-label="Essay progress">
+    <div class="wizard-nav-inner">
+      <div class="progress-meta">
+        <span class="progress-step-label" id="progress-step-label">Page 1 of 8</span>
+        <span class="word-count-badge" id="word-count-badge">0 words</span>
+      </div>
+
+      <div class="progress-track" role="progressbar" id="progress-track" aria-valuemin="0" aria-valuemax="100" aria-valuenow="20" aria-label="Essay completion progress">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+
+      <nav class="step-pills" id="step-pills" aria-label="Essay pages"></nav>
+    </div>
+  </section>
+
+  <!-- Main Distraction-Free Writing Stage -->
+  <main class="main-container" id="wizard-stage" tabindex="-1">
+    <div id="page-content" class="page-card"></div>
+  </main>
+
+  <!-- Accessible Confirmation Modal -->
+  <dialog class="confirm-dialog" id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-message">
+    <div class="confirm-dialog-body">
+      <div class="confirm-icon" aria-hidden="true">!</div>
+      <h2 id="confirm-title" class="confirm-title">Confirm Action</h2>
+      <p id="confirm-message" class="confirm-message"></p>
+      <div class="confirm-actions">
+        <button type="button" class="btn btn-secondary" id="confirm-cancel">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirm-ok">Confirm</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- Dedicated Print / Save-as-PDF Bundle (MLA Essay + Self-Assessment Summary) -->
+  <div id="print-bundle" class="print-bundle" aria-hidden="true"></div>
+</body>
+</html>
