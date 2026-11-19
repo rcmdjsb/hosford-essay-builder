@@ -36,6 +36,147 @@
     }
   };
 
+  /* ========================================================================
+     Sentence Stems Bank (Customizable Popout Stems for Every Essay Part)
+     ======================================================================== */
+  var SENTENCE_STEMS = {
+    hook: {
+      kicker: 'Introduction \u00B7 Sentence Stems',
+      title: 'Hook (Without Naming the Topic)',
+      tip: 'Describe the situation, feeling, or big idea without naming the book, article, or topic yet.',
+      stems: [
+        'Imagine a world where ',
+        'Imagine walking into a room and realizing that ',
+        'Every day, people face moments where they have to decide whether to ',
+        'Picture a time when everything seemed impossible, yet ',
+        'Most people believe that ______, but in reality, ',
+        'Have you ever felt like '
+      ]
+    },
+    context: {
+      kicker: 'Introduction \u00B7 Sentence Stems',
+      title: 'Context',
+      tip: 'Bridge from your hook to your claim by naming the text, author, or topic and giving quick background.',
+      stems: [
+        'This is what happens in [Title] by [Author], when ',
+        'This is what happens with [Topic], especially when ',
+        'In the book "[Title]" by [Author], readers learn about ',
+        'In the article "[Title]" by [Author], the central issue is ',
+        'Throughout [Title], the main character struggles with '
+      ]
+    },
+    claim: {
+      kicker: 'Introduction \u00B7 Sentence Stems',
+      title: 'Claim Statement',
+      tip: 'State your main argument clearly in one focused sentence that your body paragraphs will prove.',
+      stems: [
+        'Ultimately, [Author] shows that ',
+        'In [Title], [Character/Topic] proves that ',
+        'Because of ______, it is clear that ',
+        'Although some people think ______, the stronger truth is that ',
+        'Through ______, [Title/Topic] demonstrates that '
+      ]
+    },
+    topicSentence: {
+      kicker: 'Body Paragraph \u00B7 Sentence Stems',
+      title: 'Topic Sentence',
+      tip: 'Introduce the single main point of this body paragraph and connect it directly to your claim.',
+      stems: [
+        'First, [Title/Topic] shows that ',
+        'One major reason why [claim] is that ',
+        'Another important way [Author/Topic] proves this is through ',
+        'In addition, [Character/Topic] demonstrates that ',
+        'Finally, the strongest evidence for [claim] appears when '
+      ]
+    },
+    quote: {
+      kicker: 'Body Paragraph \u00B7 Sentence Stems',
+      title: 'Evidence Chunk (Quote / Concrete Detail)',
+      tip: 'Lead smoothly into your quote or concrete detail and remember quotation marks plus your citation.',
+      stems: [
+        'For example, the author writes, "',
+        'According to [Author], "',
+        'In the text, [Character] says, "',
+        'This is clear when the text states, "',
+        'On page __, the author explains, "',
+        'One powerful moment occurs when the text describes, "'
+      ]
+    },
+    summary: {
+      kicker: 'Body Paragraph \u00B7 Sentence Stems',
+      title: 'Summary of the Quote',
+      tip: 'Briefly explain in your own words what is happening in the quote before you analyze it.',
+      stems: [
+        'In this moment, ',
+        'Here, [Character/Author] is explaining that ',
+        'In other words, this quote shows ',
+        'At this point in the text, ',
+        'What is happening here is that '
+      ]
+    },
+    explanation: {
+      kicker: 'Body Paragraph \u00B7 Sentence Stems',
+      title: 'Explanation / Analysis',
+      tip: 'Explain HOW and WHY this quote proves your topic sentence and supports your overall claim.',
+      stems: [
+        'This quote proves [topic point] because ',
+        'This evidence matters because it reveals that ',
+        'By saying this, [Author/Character] shows that ',
+        'This connects back to my claim because ',
+        'As a result, the reader can clearly see that ',
+        'Without this moment, it would not be as clear that '
+      ]
+    },
+    concludingSentence: {
+      kicker: 'Body Paragraph \u00B7 Sentence Stems',
+      title: 'Concluding Sentence',
+      tip: 'Wrap up this paragraph by tying your evidence back to the topic sentence and your main claim.',
+      stems: [
+        'Therefore, this evidence makes it clear that ',
+        'All of this shows that ',
+        'Clearly, [topic point] plays a major role in proving that ',
+        'Because of this, readers can see why ',
+        'In short, this moment confirms that '
+      ]
+    },
+    restatedClaim: {
+      kicker: 'Conclusion \u00B7 Sentence Stems',
+      title: 'Restated Claim',
+      tip: 'Say your original claim again using fresh words and a new sentence structure.',
+      stems: [
+        'Looking back, it is clear that ',
+        'Throughout [Title/Topic], one message stands out: ',
+        'In the end, the evidence proves that ',
+        'All things considered, [Author/Topic] makes a powerful case that ',
+        'Ultimately, we can see that '
+      ]
+    },
+    summaryOfBody: {
+      kicker: 'Conclusion \u00B7 Sentence Stems',
+      title: 'Summary of Body Paragraphs',
+      tip: 'Recap your key body-paragraph points briefly without adding brand-new quotes or evidence.',
+      stems: [
+        'From ______ to ______, the evidence shows how ',
+        'Not only does [point 1], but [point 2] also proves that ',
+        'Whether looking at [point 1] or [point 2], it becomes obvious that ',
+        'Each example\u2014from ______ to ______\u2014highlights that ',
+        'Together, these moments prove that '
+      ]
+    },
+    whyItMatters: {
+      kicker: 'Conclusion \u00B7 Sentence Stems',
+      title: 'Why It All Matters (Mic Drop)',
+      tip: 'Leave your reader with 1\u20132 memorable sentences explaining the bigger lesson or real-world meaning.',
+      stems: [
+        'This matters today because in our own lives, ',
+        'The next time you face ______, remember that ',
+        'If people truly understood this lesson, our world would ',
+        'In a society where ______, this message reminds us to ',
+        'Long after finishing [Title], readers are left to think about how '
+      ]
+    }
+  };
+
   var idCounter = 1;
   function makeId(prefix) {
     idCounter += 1;
@@ -486,6 +627,110 @@
   }
 
   /* ========================================================================
+     Sentence Stems Popout Drawer Controller
+     ======================================================================== */
+  var elStemsPopout = document.getElementById('stems-popout');
+  var elStemsKicker = document.getElementById('stems-popout-kicker');
+  var elStemsTitle = document.getElementById('stems-popout-title');
+  var elStemsTip = document.getElementById('stems-popout-tip');
+  var elStemsList = document.getElementById('stems-list');
+  var elStemsClose = document.getElementById('stems-popout-close');
+  var elStemsDone = document.getElementById('stems-popout-done');
+
+  var activeStemTargetId = null;
+
+  function buildStemsButtonHtml(stemKey, targetInputId) {
+    return (
+      '<button type="button" class="btn-stems-trigger" data-stem-key="' +
+        stemKey + '" data-stem-target="' + targetInputId + '">' +
+        '<span aria-hidden="true">\u2726</span>' +
+        '<span>Sentence Stems</span>' +
+      '</button>'
+    );
+  }
+
+  function closeStemsPopout() {
+    if (elStemsPopout.open) {
+      elStemsPopout.close();
+    }
+  }
+
+  function insertStemIntoTarget(stemText) {
+    var targetId = activeStemTargetId;
+    closeStemsPopout();
+    if (!targetId) return;
+
+    var ta = document.getElementById(targetId);
+    if (!ta) return;
+
+    var existing = ta.value || '';
+    var prefix = existing.length > 0 && !/\s$/.test(existing) ? ' ' : '';
+    var nextValue = existing + prefix + stemText;
+
+    ta.value = nextValue;
+    ta.dispatchEvent(new Event('input', { bubbles: true }));
+    ta.focus();
+    try {
+      ta.setSelectionRange(nextValue.length, nextValue.length);
+    } catch (err) {
+      // Ignore selection range errors
+    }
+    showToast('Inserted sentence stem!');
+  }
+
+  function openStemsPopout(stemKey, targetInputId) {
+    var config = SENTENCE_STEMS[stemKey];
+    if (!config) return;
+
+    activeStemTargetId = targetInputId;
+    elStemsKicker.textContent = config.kicker;
+    elStemsTitle.textContent = config.title;
+    elStemsTip.textContent = config.tip;
+
+    elStemsList.innerHTML = '';
+    for (var i = 0; i < config.stems.length; i++) {
+      (function (stemText) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'stem-item-btn';
+        btn.innerHTML =
+          '<span class="stem-item-text">' + Export.escapeHtml(stemText) + '</span>' +
+          '<span class="stem-insert-pill">+ Insert</span>';
+        btn.addEventListener('click', function () {
+          insertStemIntoTarget(stemText);
+        });
+        elStemsList.appendChild(btn);
+      })(config.stems[i]);
+    }
+
+    if (typeof elStemsPopout.showModal === 'function') {
+      elStemsPopout.showModal();
+    }
+  }
+
+  elStemsClose.addEventListener('click', closeStemsPopout);
+  elStemsDone.addEventListener('click', closeStemsPopout);
+  elStemsPopout.addEventListener('click', function (e) {
+    if (e.target === elStemsPopout) {
+      closeStemsPopout();
+    }
+  });
+
+  function wireStemsButtons() {
+    var triggers = elPageContent.querySelectorAll('.btn-stems-trigger');
+    for (var i = 0; i < triggers.length; i++) {
+      (function (btn) {
+        btn.addEventListener('click', function () {
+          openStemsPopout(
+            btn.getAttribute('data-stem-key'),
+            btn.getAttribute('data-stem-target')
+          );
+        });
+      })(triggers[i]);
+    }
+  }
+
+  /* ========================================================================
      Persistence & Feedback Helpers
      ======================================================================== */
   function saveState() {
@@ -925,7 +1170,10 @@
 
       '<div class="form-stack">' +
         '<div class="field-group">' +
-          '<label class="field-label" for="intro-hook">Hook <span class="field-sublabel">(Describe the topic without naming it directly)</span></label>' +
+          '<div class="field-label-row">' +
+            '<label class="field-label" for="intro-hook">Hook <span class="field-sublabel">(Describe the topic without naming it directly)</span></label>' +
+            buildStemsButtonHtml('hook', 'intro-hook') +
+          '</div>' +
           '<textarea id="intro-hook" class="input-textarea" ' +
             'placeholder="For example, start with \'Imagine...\' and describe the situation or big idea without naming the book, article, or topic yet.">' +
             Export.escapeHtml(intro.hook) +
@@ -933,7 +1181,10 @@
         '</div>' +
 
         '<div class="field-group">' +
-          '<label class="field-label" for="intro-context">Context</label>' +
+          '<div class="field-label-row">' +
+            '<label class="field-label" for="intro-context">Context</label>' +
+            buildStemsButtonHtml('context', 'intro-context') +
+          '</div>' +
           '<textarea id="intro-context" class="input-textarea" ' +
             'placeholder="Introduce the topic, book, or article by explaining: \'This is what happens in...\' or \'This is what happens with...\'">' +
             Export.escapeHtml(intro.context) +
@@ -941,7 +1192,10 @@
         '</div>' +
 
         '<div class="field-group">' +
-          '<label class="field-label" for="intro-claim">Claim Statement</label>' +
+          '<div class="field-label-row">' +
+            '<label class="field-label" for="intro-claim">Claim Statement</label>' +
+            buildStemsButtonHtml('claim', 'intro-claim') +
+          '</div>' +
           '<p class="field-hint">State your main thesis or claim clearly &mdash; this is the big idea your body paragraphs will prove.</p>' +
           '<textarea id="intro-claim" class="input-textarea" ' +
             'placeholder="Write one strong, clear sentence stating your main claim or argument...">' +
@@ -968,6 +1222,7 @@
 
     autoResizeAllTextareas();
     wireVideoHelpButton();
+    wireStemsButtons();
     wireFooterNav(currentIdx);
   }
 
@@ -997,7 +1252,10 @@
           '</div>' +
 
           '<div class="field-group">' +
-            '<label class="field-label" for="bp-quote-' + chunkIdx + '">Evidence Chunk ' + chunkNum + ' <span class="field-sublabel">(Quote / Concrete Detail)</span></label>' +
+            '<div class="field-label-row">' +
+              '<label class="field-label" for="bp-quote-' + chunkIdx + '">Evidence Chunk ' + chunkNum + ' <span class="field-sublabel">(Quote / Concrete Detail)</span></label>' +
+              buildStemsButtonHtml('quote', 'bp-quote-' + chunkIdx) +
+            '</div>' +
             '<textarea id="bp-quote-' + chunkIdx + '" class="input-textarea is-compact" data-chunk-field="quote" data-chunk-index="' + chunkIdx + '" ' +
               'placeholder="Introduce and include your quote or specific evidence from the text (don\'t forget quotation marks and the citation, e.g., (Author 42)).">' +
               Export.escapeHtml(chunk.quote) +
@@ -1005,7 +1263,10 @@
           '</div>' +
 
           '<div class="field-group">' +
-            '<label class="field-label" for="bp-summary-' + chunkIdx + '">Summary of the Quote <span class="field-sublabel">(What is happening in the quote?)</span></label>' +
+            '<div class="field-label-row">' +
+              '<label class="field-label" for="bp-summary-' + chunkIdx + '">Summary of the Quote <span class="field-sublabel">(What is happening in the quote?)</span></label>' +
+              buildStemsButtonHtml('summary', 'bp-summary-' + chunkIdx) +
+            '</div>' +
             '<textarea id="bp-summary-' + chunkIdx + '" class="input-textarea is-compact" data-chunk-field="summary" data-chunk-index="' + chunkIdx + '" ' +
               'placeholder="In your own words, briefly explain what is happening in this quote or moment...">' +
               Export.escapeHtml(chunk.summary) +
@@ -1013,7 +1274,10 @@
           '</div>' +
 
           '<div class="field-group">' +
-            '<label class="field-label" for="bp-explanation-' + chunkIdx + '">Explanation / Analysis <span class="field-sublabel">(How does this quote prove the topic sentence?)</span></label>' +
+            '<div class="field-label-row">' +
+              '<label class="field-label" for="bp-explanation-' + chunkIdx + '">Explanation / Analysis <span class="field-sublabel">(How does this quote prove the topic sentence?)</span></label>' +
+              buildStemsButtonHtml('explanation', 'bp-explanation-' + chunkIdx) +
+            '</div>' +
             '<textarea id="bp-explanation-' + chunkIdx + '" class="input-textarea" data-chunk-field="explanation" data-chunk-index="' + chunkIdx + '" ' +
               'placeholder="Explain why this evidence matters and how it clearly proves your topic sentence and claim...">' +
               Export.escapeHtml(chunk.explanation) +
@@ -1045,7 +1309,10 @@
 
       '<div class="form-stack">' +
         '<div class="field-group">' +
-          '<label class="field-label" for="bp-topic">Topic Sentence</label>' +
+          '<div class="field-label-row">' +
+            '<label class="field-label" for="bp-topic">Topic Sentence</label>' +
+            buildStemsButtonHtml('topicSentence', 'bp-topic') +
+          '</div>' +
           '<textarea id="bp-topic" class="input-textarea is-compact" ' +
             'placeholder="State the main point of Body Paragraph ' + bpNumber + ' and connect it back to your claim...">' +
             Export.escapeHtml(bp.topicSentence) +
@@ -1061,7 +1328,10 @@
         '</div>' +
 
         '<div class="field-group">' +
-          '<label class="field-label" for="bp-concluding">Concluding Sentence</label>' +
+          '<div class="field-label-row">' +
+            '<label class="field-label" for="bp-concluding">Concluding Sentence</label>' +
+            buildStemsButtonHtml('concludingSentence', 'bp-concluding') +
+          '</div>' +
           '<textarea id="bp-concluding" class="input-textarea is-compact" ' +
             'placeholder="Wrap up Body Paragraph ' + bpNumber + ' by tying your evidence back to your topic sentence and claim...">' +
             Export.escapeHtml(bp.concludingSentence) +
@@ -1195,6 +1465,7 @@
 
     autoResizeAllTextareas();
     wireVideoHelpButton();
+    wireStemsButtons();
     wireFooterNav(currentIdx);
   }
 
@@ -1234,7 +1505,10 @@
         claimReferenceHtml +
 
         '<div class="field-group">' +
-          '<label class="field-label" for="conc-restated-claim">Restated Claim</label>' +
+          '<div class="field-label-row">' +
+            '<label class="field-label" for="conc-restated-claim">Restated Claim</label>' +
+            buildStemsButtonHtml('restatedClaim', 'conc-restated-claim') +
+          '</div>' +
           '<p class="field-hint">Rewrite your original claim statement above using fresh words and a new sentence structure.</p>' +
           '<textarea id="conc-restated-claim" class="input-textarea" ' +
             'placeholder="Say your main claim again in a fresh, confident way without copying Page 2 word-for-word...">' +
@@ -1243,7 +1517,10 @@
         '</div>' +
 
         '<div class="field-group">' +
-          '<label class="field-label" for="conc-summary">Summary of Body Paragraphs</label>' +
+          '<div class="field-label-row">' +
+            '<label class="field-label" for="conc-summary">Summary of Body Paragraphs</label>' +
+            buildStemsButtonHtml('summaryOfBody', 'conc-summary') +
+          '</div>' +
           '<textarea id="conc-summary" class="input-textarea" ' +
             'placeholder="Write a short recap of the main points you proved in your body paragraphs...">' +
             Export.escapeHtml(c.summaryOfBody) +
@@ -1251,7 +1528,10 @@
         '</div>' +
 
         '<div class="field-group">' +
-          '<label class="field-label" for="conc-mic-drop">Why It All Matters <span class="field-sublabel">(Mic Drop)</span></label>' +
+          '<div class="field-label-row">' +
+            '<label class="field-label" for="conc-mic-drop">Why It All Matters <span class="field-sublabel">(Mic Drop)</span></label>' +
+            buildStemsButtonHtml('whyItMatters', 'conc-mic-drop') +
+          '</div>' +
           '<textarea id="conc-mic-drop" class="input-textarea" ' +
             'placeholder="Write 1\u20132 strong sentences explaining the bigger takeaway, lesson, or real-world significance...">' +
             Export.escapeHtml(c.whyItMatters) +
@@ -1284,6 +1564,7 @@
 
     autoResizeAllTextareas();
     wireVideoHelpButton();
+    wireStemsButtons();
     wireFooterNav(currentIdx);
   }
 

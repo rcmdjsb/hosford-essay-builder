@@ -1587,6 +1587,174 @@ body {
 }
 
 /* ==========================================================================
+   Sentence Stems Trigger & Right-Side Popout Drawer (<dialog>)
+   ========================================================================== */
+.btn-stems-trigger {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--husky-teal);
+  background: var(--husky-teal-soft);
+  border: 1px solid #B7DFEE;
+  border-radius: var(--radius-pill);
+  padding: 0.24rem 0.68rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.14s ease, border-color 0.14s ease, color 0.14s ease, box-shadow 0.14s ease;
+}
+
+.btn-stems-trigger:hover {
+  background: #D9EFF8;
+  border-color: var(--husky-teal);
+  color: var(--husky-navy);
+}
+
+.btn-stems-trigger:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-color: var(--husky-teal);
+}
+
+.stems-popout {
+  margin: 0 0 0 auto;
+  height: 100vh;
+  max-height: 100vh;
+  width: min(440px, 100vw);
+  max-width: 100vw;
+  border: none;
+  border-left: 3px solid var(--husky-teal);
+  border-radius: 14px 0 0 14px;
+  padding: 0;
+  background: #FFFFFF;
+  color: var(--text-primary);
+  box-shadow: -12px 0 40px rgba(6, 26, 34, 0.26);
+  overflow: hidden;
+}
+
+.stems-popout[open] {
+  display: flex;
+  flex-direction: column;
+  animation: stemsSlideIn 0.18s ease-out;
+}
+
+@keyframes stemsSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.stems-popout::backdrop {
+  background: rgba(6, 26, 34, 0.32);
+}
+
+.stems-popout-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.15rem 1.25rem;
+  background: var(--surface-subtle);
+}
+
+.stems-popout-tip {
+  margin: 0 0 0.95rem;
+  padding: 0.7rem 0.85rem;
+  background: var(--husky-cyan-soft);
+  border: 1px solid #C2E5F4;
+  border-left: 3px solid var(--husky-teal);
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.stems-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.stem-item-btn {
+  appearance: none;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  text-align: left;
+  font-family: var(--font-ui);
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 0.78rem 0.9rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: background-color 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease, transform 0.08s ease;
+}
+
+.stem-item-btn:hover {
+  border-color: var(--husky-teal);
+  background: var(--husky-teal-soft);
+  box-shadow: 0 2px 8px rgba(31, 122, 153, 0.12);
+}
+
+.stem-item-btn:active {
+  transform: translateY(1px);
+}
+
+.stem-item-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-color: var(--husky-teal);
+}
+
+.stem-item-text {
+  font-size: 0.92rem;
+  line-height: 1.45;
+  font-weight: 500;
+  color: var(--husky-navy);
+}
+
+.stem-insert-pill {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--husky-teal);
+  background: var(--husky-teal-soft);
+  border: 1px solid #B7DFEE;
+  padding: 0.22rem 0.58rem;
+  border-radius: var(--radius-pill);
+}
+
+.stem-item-btn:hover .stem-insert-pill {
+  background: var(--husky-teal);
+  border-color: var(--husky-teal);
+  color: #FFFFFF;
+}
+
+.stems-popout-footer {
+  padding: 0.85rem 1.25rem;
+  background: #FFFFFF;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.stems-footer-note {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
    Toast Notification
    ========================================================================== */
 .toast {

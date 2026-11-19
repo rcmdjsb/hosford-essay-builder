@@ -159,6 +159,25 @@
     </form>
   </dialog>
 
+  <!-- Sentence Stems Popout Drawer -->
+  <dialog class="stems-popout" id="stems-popout" aria-labelledby="stems-popout-title">
+    <div class="video-dialog-header">
+      <div>
+        <span class="video-dialog-kicker" id="stems-popout-kicker">Sentence Stems</span>
+        <h2 id="stems-popout-title" class="video-dialog-title">Sentence Stems</h2>
+      </div>
+      <button type="button" class="video-close-btn" id="stems-popout-close" aria-label="Close sentence stems">&times;</button>
+    </div>
+    <div class="stems-popout-body">
+      <p class="stems-popout-tip" id="stems-popout-tip"></p>
+      <div class="stems-list" id="stems-list"></div>
+    </div>
+    <div class="stems-popout-footer">
+      <span class="stems-footer-note">Click any stem to insert it right into your writing box.</span>
+      <button type="button" class="btn btn-secondary btn-small" id="stems-popout-done">Close</button>
+    </div>
+  </dialog>
+
   <!-- Toast Notification -->
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 

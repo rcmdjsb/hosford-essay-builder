@@ -67,6 +67,11 @@
 - Clicking it opens a modal `<dialog>` player embedding the video via privacy-enhanced `https://www.youtube-nocookie.com/embed/<ID>?rel=0`, clears the iframe `src` on close so audio never plays in the background, and includes an **Open on YouTube** fallback link for filtered school networks.
 - Default URLs are configured in `DEFAULT_VIDEO_LESSONS` at the top of `app.js` and can also be customized directly in the browser via the **Video Settings** modal (supports full YouTube URLs, `youtu.be` short links, embed/shorts URLs, or bare 11-character IDs, plus a **Reset to Defaults** button).
 
+## 7. Sentence Stems Popout Drawer
+- Every paragraph-writing part across Introduction (Hook, Context, Claim Statement), Body Paragraphs 1..N (Topic Sentence, Evidence Chunk Quote, Summary of the Quote, Explanation/Analysis, Concluding Sentence), and Conclusion (Restated Claim, Summary of Body Paragraphs, Why It All Matters) includes a **Sentence Stems** pill button right on its label row.
+- Clicking **Sentence Stems** opens a right-side `<dialog class="stems-popout">` drawer configured via `SENTENCE_STEMS` in `app.js`.
+- Clicking any stem inserts it straight into that writing box, auto-resizes the box, triggers `localStorage` auto-save, closes the drawer, and focuses the box so the student can immediately keep typing.
+
 ## 6. MLA Formatting & Export Rules
 - Font: `Times New Roman`, `12pt`.
 - Line spacing: True double-spacing (`line-height: 2`) throughout heading, title, and body paragraphs with zero extra blank spacing between paragraphs.
