@@ -34,6 +34,9 @@
           <span class="save-dot" aria-hidden="true"></span>
           <span id="save-indicator-text">Auto-saved</span>
         </div>
+        <button type="button" class="btn btn-header-subtle" id="btn-video-settings" title="Customize YouTube help videos for each paragraph type">
+          Video Settings
+        </button>
         <button type="button" class="btn btn-clear-header" id="btn-clear-essay">
           Clear / Start New Essay
         </button>
@@ -73,6 +76,87 @@
         <button type="button" class="btn btn-danger" id="confirm-ok">Confirm</button>
       </div>
     </div>
+  </dialog>
+
+  <!-- Distraction-Free Video Help Modal -->
+  <dialog class="video-dialog" id="video-dialog" aria-labelledby="video-dialog-title">
+    <div class="video-dialog-header">
+      <div>
+        <span class="video-dialog-kicker" id="video-dialog-kicker">Video Mini-Lesson</span>
+        <h2 id="video-dialog-title" class="video-dialog-title">Watch Video Help</h2>
+      </div>
+      <button type="button" class="video-close-btn" id="video-dialog-close" aria-label="Close video player">&times;</button>
+    </div>
+    <div class="video-dialog-body">
+      <div class="video-embed-frame" id="video-embed-frame">
+        <iframe
+          id="video-iframe"
+          title="Essay writing video lesson"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </div>
+      <div class="video-empty-state" id="video-empty-state" hidden>
+        <p>No YouTube video is currently set for this paragraph type.</p>
+        <button type="button" class="btn btn-primary btn-small" id="btn-empty-open-video-settings">Set Video Link</button>
+      </div>
+    </div>
+    <div class="video-dialog-footer">
+      <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-small" id="video-open-youtube">
+        Open on YouTube &#8599;
+      </a>
+      <div class="video-dialog-footer-right">
+        <button type="button" class="btn btn-outline-teal btn-small" id="btn-modal-video-settings">
+          Teacher: Swap Video Links
+        </button>
+        <button type="button" class="btn btn-primary btn-small" id="video-dialog-done">
+          Back to Writing
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Teacher Video Settings Modal -->
+  <dialog class="settings-dialog" id="video-settings-dialog" aria-labelledby="video-settings-title">
+    <form class="settings-dialog-form" id="video-settings-form" novalidate>
+      <div class="video-dialog-header">
+        <div>
+          <span class="video-dialog-kicker">Teacher Customization</span>
+          <h2 id="video-settings-title" class="video-dialog-title">Paragraph Help Video Links</h2>
+        </div>
+        <button type="button" class="video-close-btn" id="video-settings-close" aria-label="Close video settings">&times;</button>
+      </div>
+      <div class="settings-dialog-body">
+        <p class="settings-intro">
+          Paste any YouTube link (or video ID) to replace the default mini-lesson video for each paragraph type. Changes save automatically in this browser and stay saved even when students start a new essay.
+        </p>
+
+        <div class="field-group">
+          <label class="field-label" for="video-url-intro">Introduction Paragraph Video</label>
+          <input type="url" id="video-url-intro" class="input-text" placeholder="https://www.youtube.com/watch?v=...">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="video-url-body">Body Paragraphs Video</label>
+          <input type="url" id="video-url-body" class="input-text" placeholder="https://www.youtube.com/watch?v=...">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="video-url-conclusion">Conclusion Paragraph Video</label>
+          <input type="url" id="video-url-conclusion" class="input-text" placeholder="https://www.youtube.com/watch?v=...">
+        </div>
+
+        <p class="settings-error" id="video-settings-error" role="alert" hidden></p>
+      </div>
+      <div class="settings-dialog-footer">
+        <button type="button" class="btn btn-secondary btn-small" id="btn-reset-videos">Reset to Defaults</button>
+        <div class="settings-dialog-footer-right">
+          <button type="button" class="btn btn-secondary btn-small" id="video-settings-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-small">Save Video Links</button>
+        </div>
+      </div>
+    </form>
   </dialog>
 
   <!-- Toast Notification -->

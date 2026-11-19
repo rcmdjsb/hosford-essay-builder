@@ -8,9 +8,33 @@
   'use strict';
 
   var STORAGE_KEY = 'hosford_essay_builder_v1';
+  var VIDEO_SETTINGS_KEY = 'hosford_essay_video_settings_v1';
   var SCHEMA_VERSION = 2;
   var DEFAULT_BODY_PARAGRAPHS = 3;
   var Export = window.HosfordExport;
+
+  /* ========================================================================
+     Teacher-Configurable Default YouTube Mini-Lesson Videos
+     Swap any URL below to change the default videos for all students, or
+     customize per browser via the "Video Settings" button in the header.
+     ======================================================================== */
+  var DEFAULT_VIDEO_LESSONS = {
+    intro: {
+      kicker: 'Introduction Paragraph \u00B7 Video Mini-Lesson',
+      title: 'How to Write an Eye-Catching Essay Introduction',
+      url: 'https://www.youtube.com/watch?v=msaynBwwxkA'
+    },
+    body: {
+      kicker: 'Body Paragraph \u00B7 Video Mini-Lesson',
+      title: 'How to Write Strong Essay Body Paragraphs',
+      url: 'https://www.youtube.com/watch?v=I0SMvLu2D1Y'
+    },
+    conclusion: {
+      kicker: 'Conclusion Paragraph \u00B7 Video Mini-Lesson',
+      title: 'How to Write a Strong Essay Conclusion',
+      url: 'https://www.youtube.com/watch?v=2UElC_YZ0Eo'
+    }
+  };
 
   var idCounter = 1;
   function makeId(prefix) {
@@ -208,6 +232,258 @@
   var elConfirmOk = document.getElementById('confirm-ok');
   var elConfirmCancel = document.getElementById('confirm-cancel');
   var elToast = document.getElementById('toast');
+
+  // Video Help & Teacher Video Settings DOM References
+  var elBtnVideoSettings = document.getElementById('btn-video-settings');
+  var elVideoDialog = document.getElementById('video-dialog');
+  var elVideoKicker = document.getElementById('video-dialog-kicker');
+  var elVideoTitle = document.getElementById('video-dialog-title');
+  var elVideoFrameWrap = document.getElementById('video-embed-frame');
+  var elVideoIframe = document.getElementById('video-iframe');
+  var elVideoEmptyState = document.getElementById('video-empty-state');
+  var elVideoOpenYoutube = document.getElementById('video-open-youtube');
+  var elVideoClose = document.getElementById('video-dialog-close');
+  var elVideoDone = document.getElementById('video-dialog-done');
+  var elBtnModalVideoSettings = document.getElementById('btn-modal-video-settings');
+  var elBtnEmptyOpenVideoSettings = document.getElementById('btn-empty-open-video-settings');
+
+  var elSettingsDialog = document.getElementById('video-settings-dialog');
+  var elSettingsForm = document.getElementById('video-settings-form');
+  var elSettingsClose = document.getElementById('video-settings-close');
+  var elSettingsCancel = document.getElementById('video-settings-cancel');
+  var elBtnResetVideos = document.getElementById('btn-reset-videos');
+  var elSettingsError = document.getElementById('video-settings-error');
+  var elInputVideoIntro = document.getElementById('video-url-intro');
+  var elInputVideoBody = document.getElementById('video-url-body');
+  var elInputVideoConclusion = document.getElementById('video-url-conclusion');
+
+  var activeVideoType = null;
+
+  /* ========================================================================
+     YouTube Video Helpers & Teacher Settings Persistence
+     ======================================================================== */
+  function parseYouTubeId(input) {
+    var trimmed = String(input || '').trim();
+    if (!trimmed) return '';
+
+    if (/^[A-Za-z0-9_-]{11}$/.test(trimmed)) {
+      return trimmed;
+    }
+
+    try {
+      var parsed = new URL(trimmed);
+      var host = parsed.hostname.replace(/^www\./, '').toLowerCase();
+
+      if (host === 'youtu.be') {
+        var shortId = parsed.pathname.split('/').filter(Boolean)[0] || '';
+        return /^[A-Za-z0-9_-]{11}$/.test(shortId) ? shortId : null;
+      }
+
+      if (host === 'youtube.com' || host === 'm.youtube.com' || host === 'youtube-nocookie.com') {
+        var vParam = parsed.searchParams.get('v');
+        if (vParam && /^[A-Za-z0-9_-]{11}$/.test(vParam)) {
+          return vParam;
+        }
+        var segments = parsed.pathname.split('/').filter(Boolean);
+        if (
+          segments.length >= 2 &&
+          (segments[0] === 'embed' || segments[0] === 'shorts' || segments[0] === 'live') &&
+          /^[A-Za-z0-9_-]{11}$/.test(segments[1])
+        ) {
+          return segments[1];
+        }
+      }
+    } catch (err) {
+      return null;
+    }
+
+    return null;
+  }
+
+  function loadVideoSettings() {
+    var result = {
+      intro: DEFAULT_VIDEO_LESSONS.intro.url,
+      body: DEFAULT_VIDEO_LESSONS.body.url,
+      conclusion: DEFAULT_VIDEO_LESSONS.conclusion.url
+    };
+    try {
+      var saved = window.localStorage.getItem(VIDEO_SETTINGS_KEY);
+      if (!saved) return result;
+      var parsed = JSON.parse(saved);
+      if (parsed && typeof parsed === 'object') {
+        if (typeof parsed.intro === 'string') result.intro = parsed.intro;
+        if (typeof parsed.body === 'string') result.body = parsed.body;
+        if (typeof parsed.conclusion === 'string') result.conclusion = parsed.conclusion;
+      }
+    } catch (err) {
+      // Fall back to defaults
+    }
+    return result;
+  }
+
+  var videoUrls = loadVideoSettings();
+
+  function saveVideoSettings() {
+    try {
+      window.localStorage.setItem(VIDEO_SETTINGS_KEY, JSON.stringify(videoUrls));
+    } catch (err) {
+      // Ignore storage errors
+    }
+  }
+
+  function buildVideoHelpButtonHtml(paragraphType) {
+    return (
+      '<button type="button" class="btn btn-video-help" id="btn-watch-video" data-video-type="' + paragraphType + '">' +
+        '<span class="video-play-icon" aria-hidden="true">' +
+          '<svg viewBox="0 0 12 12" width="10" height="10" fill="currentColor" xmlns="http://www.w3.org/2000/svg">' +
+            '<path d="M2.5 1.75L10.25 6L2.5 10.25V1.75Z" />' +
+          '</svg>' +
+        '</span>' +
+        '<span>Watch Video Help</span>' +
+      '</button>'
+    );
+  }
+
+  function openVideoModal(paragraphType) {
+    var meta = DEFAULT_VIDEO_LESSONS[paragraphType];
+    if (!meta) return;
+
+    activeVideoType = paragraphType;
+    var rawUrl = videoUrls[paragraphType] || '';
+    var videoId = parseYouTubeId(rawUrl);
+
+    elVideoKicker.textContent = meta.kicker;
+    elVideoTitle.textContent =
+      rawUrl === meta.url
+        ? meta.title
+        : meta.kicker.split(' \u00B7 ')[0] + ' Help Video';
+
+    if (videoId) {
+      elVideoIframe.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?rel=0';
+      elVideoIframe.title = elVideoTitle.textContent;
+      elVideoFrameWrap.hidden = false;
+      elVideoEmptyState.hidden = true;
+      elVideoOpenYoutube.href = 'https://www.youtube.com/watch?v=' + videoId;
+      elVideoOpenYoutube.hidden = false;
+    } else {
+      elVideoIframe.src = '';
+      elVideoFrameWrap.hidden = true;
+      elVideoEmptyState.hidden = false;
+      elVideoOpenYoutube.hidden = true;
+    }
+
+    if (typeof elVideoDialog.showModal === 'function') {
+      elVideoDialog.showModal();
+    } else if (videoId) {
+      window.open('https://www.youtube.com/watch?v=' + videoId, '_blank', 'noopener');
+    }
+  }
+
+  function closeVideoModal() {
+    elVideoIframe.src = '';
+    if (elVideoDialog.open) {
+      elVideoDialog.close();
+    }
+  }
+
+  function openVideoSettingsModal() {
+    closeVideoModal();
+    elInputVideoIntro.value = videoUrls.intro || '';
+    elInputVideoBody.value = videoUrls.body || '';
+    elInputVideoConclusion.value = videoUrls.conclusion || '';
+    elSettingsError.hidden = true;
+    elSettingsError.textContent = '';
+
+    if (typeof elSettingsDialog.showModal === 'function') {
+      elSettingsDialog.showModal();
+    }
+  }
+
+  function closeVideoSettingsModal() {
+    if (elSettingsDialog.open) {
+      elSettingsDialog.close();
+    }
+  }
+
+  elVideoClose.addEventListener('click', closeVideoModal);
+  elVideoDone.addEventListener('click', closeVideoModal);
+  elVideoDialog.addEventListener('close', function () {
+    elVideoIframe.src = '';
+  });
+  elVideoDialog.addEventListener('click', function (e) {
+    if (e.target === elVideoDialog) {
+      closeVideoModal();
+    }
+  });
+
+  elBtnVideoSettings.addEventListener('click', openVideoSettingsModal);
+  elBtnModalVideoSettings.addEventListener('click', openVideoSettingsModal);
+  elBtnEmptyOpenVideoSettings.addEventListener('click', openVideoSettingsModal);
+
+  elSettingsClose.addEventListener('click', closeVideoSettingsModal);
+  elSettingsCancel.addEventListener('click', closeVideoSettingsModal);
+  elSettingsDialog.addEventListener('click', function (e) {
+    if (e.target === elSettingsDialog) {
+      closeVideoSettingsModal();
+    }
+  });
+
+  elBtnResetVideos.addEventListener('click', function () {
+    elInputVideoIntro.value = DEFAULT_VIDEO_LESSONS.intro.url;
+    elInputVideoBody.value = DEFAULT_VIDEO_LESSONS.body.url;
+    elInputVideoConclusion.value = DEFAULT_VIDEO_LESSONS.conclusion.url;
+    elSettingsError.hidden = true;
+    showToast('Restored default video links. Click Save Video Links to apply.');
+  });
+
+  elSettingsForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var fields = [
+      { key: 'intro', label: 'Introduction Paragraph Video', val: elInputVideoIntro.value.trim() },
+      { key: 'body', label: 'Body Paragraphs Video', val: elInputVideoBody.value.trim() },
+      { key: 'conclusion', label: 'Conclusion Paragraph Video', val: elInputVideoConclusion.value.trim() }
+    ];
+
+    var normalizedUrls = {};
+    for (var i = 0; i < fields.length; i++) {
+      var f = fields[i];
+      if (!f.val) {
+        normalizedUrls[f.key] = '';
+      } else {
+        var parsedId = parseYouTubeId(f.val);
+        if (!parsedId) {
+          elSettingsError.textContent =
+            'Please enter a valid YouTube link (or leave blank) for "' + f.label + '".';
+          elSettingsError.hidden = false;
+          return;
+        }
+        normalizedUrls[f.key] = 'https://www.youtube.com/watch?v=' + parsedId;
+      }
+    }
+
+    videoUrls = normalizedUrls;
+    saveVideoSettings();
+    closeVideoSettingsModal();
+    showToast('Video links saved!');
+
+    if (activeVideoType) {
+      var reopenType = activeVideoType;
+      activeVideoType = null;
+      var watchBtn = document.getElementById('btn-watch-video');
+      if (watchBtn && watchBtn.getAttribute('data-video-type') === reopenType) {
+        openVideoModal(reopenType);
+      }
+    }
+  });
+
+  function wireVideoHelpButton() {
+    var watchBtn = document.getElementById('btn-watch-video');
+    if (watchBtn) {
+      watchBtn.addEventListener('click', function () {
+        openVideoModal(watchBtn.getAttribute('data-video-type'));
+      });
+    }
+  }
 
   /* ========================================================================
      Persistence & Feedback Helpers
@@ -642,6 +918,9 @@
           '<h2 class="page-title">Introduction Paragraph</h2>' +
           '<p class="page-description">Build your opening paragraph in three clear parts. They will automatically combine into one smooth paragraph on the final page.</p>' +
         '</div>' +
+        '<div class="page-header-actions">' +
+          buildVideoHelpButtonHtml('intro') +
+        '</div>' +
       '</div>' +
 
       '<div class="form-stack">' +
@@ -688,6 +967,7 @@
     });
 
     autoResizeAllTextareas();
+    wireVideoHelpButton();
     wireFooterNav(currentIdx);
   }
 
@@ -757,7 +1037,10 @@
           '<h2 class="page-title">Body Paragraph ' + bpNumber + '</h2>' +
           '<p class="page-description">Support your claim with a clear topic sentence, text evidence, analysis, and a strong wrap-up sentence.</p>' +
         '</div>' +
-        deleteBodyBtn +
+        '<div class="page-header-actions">' +
+          buildVideoHelpButtonHtml('body') +
+          deleteBodyBtn +
+        '</div>' +
       '</div>' +
 
       '<div class="form-stack">' +
@@ -911,6 +1194,7 @@
     }
 
     autoResizeAllTextareas();
+    wireVideoHelpButton();
     wireFooterNav(currentIdx);
   }
 
@@ -940,6 +1224,9 @@
           '<span class="page-kicker">Page ' + (currentIdx + 1) + ' \u00B7 Conclusion</span>' +
           '<h2 class="page-title">Conclusion Paragraph</h2>' +
           '<p class="page-description">Bring your essay to a strong finish by restating your claim in fresh words, summarizing your main points, and leaving your reader with a lasting takeaway.</p>' +
+        '</div>' +
+        '<div class="page-header-actions">' +
+          buildVideoHelpButtonHtml('conclusion') +
         '</div>' +
       '</div>' +
 
@@ -996,6 +1283,7 @@
     });
 
     autoResizeAllTextareas();
+    wireVideoHelpButton();
     wireFooterNav(currentIdx);
   }
 

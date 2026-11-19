@@ -57,9 +57,15 @@
    - **Self-Evaluation Summary & Print Integration**: Displays live self-assessment summary and attaches a clean, formatted Self-Assessment Summary sheet on a new page right after the MLA essay when printing/saving as PDF.
 
 ## 5. Data Schema & Persistence
-- Storage key: `hosford_essay_builder_v1` in `localStorage`.
-- Auto-saved on every `input` event and structural change (add/remove chunk, add/remove body paragraph, page change).
-- **Clear / Start New Essay** requires explicit modal confirmation before clearing storage and resetting state.
+- Student essay storage key: `hosford_essay_builder_v1` in `localStorage`.
+- Teacher video settings storage key: `hosford_essay_video_settings_v1` in `localStorage` (preserved even when students click **Clear / Start New Essay**).
+- Auto-saved on every `input` event and structural change (add/remove chunk, add/remove body paragraph, page change, checklist/rubric updates).
+- **Clear / Start New Essay** requires explicit modal confirmation before clearing essay storage and resetting state.
+
+## 6. Paragraph Video Help & Teacher Customization
+- Each paragraph writing page (**Introduction**, **Body Paragraphs 1..N**, and **Conclusion**) displays a distraction-free **Watch Video Help** button in the page header.
+- Clicking it opens a modal `<dialog>` player embedding the video via privacy-enhanced `https://www.youtube-nocookie.com/embed/<ID>?rel=0`, clears the iframe `src` on close so audio never plays in the background, and includes an **Open on YouTube** fallback link for filtered school networks.
+- Default URLs are configured in `DEFAULT_VIDEO_LESSONS` at the top of `app.js` and can also be customized directly in the browser via the **Video Settings** modal (supports full YouTube URLs, `youtu.be` short links, embed/shorts URLs, or bare 11-character IDs, plus a **Reset to Defaults** button).
 
 ## 6. MLA Formatting & Export Rules
 - Font: `Times New Roman`, `12pt`.

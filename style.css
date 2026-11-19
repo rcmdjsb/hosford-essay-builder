@@ -670,6 +670,53 @@ body {
   color: #FFFFFF;
 }
 
+.btn-header-subtle {
+  background-color: rgba(124, 201, 232, 0.12);
+  color: #D9F0FA;
+  border: 1px solid rgba(124, 201, 232, 0.35);
+  font-size: 0.84rem;
+  padding: 0.45rem 0.85rem;
+}
+
+.btn-header-subtle:hover {
+  background-color: rgba(124, 201, 232, 0.24);
+  border-color: var(--husky-cyan);
+  color: #FFFFFF;
+}
+
+.page-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.btn-video-help {
+  background-color: var(--husky-cyan-soft);
+  color: var(--husky-navy);
+  border: 1.5px solid var(--husky-cyan);
+  font-size: 0.86rem;
+  padding: 0.48rem 0.9rem;
+}
+
+.btn-video-help:hover {
+  background-color: #D7EFF9;
+  border-color: var(--husky-teal);
+  color: var(--husky-navy);
+}
+
+.video-play-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--husky-teal);
+  color: #FFFFFF;
+  flex-shrink: 0;
+}
+
 .btn-danger {
   background-color: var(--danger);
   color: #FFFFFF;
@@ -1370,6 +1417,173 @@ body {
   display: flex;
   justify-content: flex-end;
   gap: 0.7rem;
+}
+
+/* ==========================================================================
+   Video Help Modal & Teacher Video Settings Modal (<dialog>)
+   ========================================================================== */
+.video-dialog,
+.settings-dialog {
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 0;
+  width: calc(100% - 2rem);
+  box-shadow: 0 24px 60px rgba(6, 26, 34, 0.36);
+  background: #FFFFFF;
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+.video-dialog {
+  max-width: 780px;
+}
+
+.settings-dialog {
+  max-width: 560px;
+}
+
+.video-dialog::backdrop,
+.settings-dialog::backdrop {
+  background: rgba(6, 26, 34, 0.65);
+  backdrop-filter: blur(3px);
+}
+
+.video-dialog-header {
+  background: var(--husky-navy);
+  color: #FFFFFF;
+  padding: 1rem 1.35rem;
+  border-bottom: 3px solid var(--husky-teal);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.video-dialog-kicker {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--husky-cyan);
+  margin-bottom: 0.15rem;
+}
+
+.video-dialog-title {
+  margin: 0;
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.25;
+}
+
+.video-close-btn {
+  appearance: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(124, 201, 232, 0.3);
+  color: #FFFFFF;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.video-close-btn:hover {
+  background: rgba(124, 201, 232, 0.24);
+  border-color: var(--husky-cyan);
+}
+
+.video-close-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.video-dialog-body {
+  padding: 1.25rem 1.35rem;
+  background: var(--surface-subtle);
+}
+
+.video-embed-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #061A22;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+}
+
+.video-embed-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.video-empty-state {
+  text-align: center;
+  padding: 2.25rem 1.25rem;
+  background: #FFFFFF;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+}
+
+.video-empty-state p {
+  margin: 0 0 0.85rem;
+}
+
+.video-dialog-footer,
+.settings-dialog-footer {
+  padding: 0.9rem 1.35rem;
+  background: #FFFFFF;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.video-dialog-footer-right,
+.settings-dialog-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.settings-dialog-body {
+  padding: 1.25rem 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.settings-intro {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.settings-error {
+  margin: 0;
+  padding: 0.65rem 0.85rem;
+  background: var(--danger-soft);
+  border: 1px solid var(--danger-border);
+  border-radius: var(--radius-sm);
+  color: var(--danger);
+  font-size: 0.86rem;
+  font-weight: 600;
 }
 
 /* ==========================================================================
